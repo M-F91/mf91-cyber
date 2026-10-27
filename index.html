@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.F91 | M.F91 Elite Digital Forensics & Cyber Intelligence</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #04070c;
+            --bg-card: #0a101d;
+            --accent-cyan: #00f2fe;
+            --accent-glow: rgba(0, 242, 254, 0.25);
+            --snap-yellow: #FFFC00;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border-line: #1e293b;
+            --gold-accent: #ffd700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 252, 0, 0.02) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Navbar */
+        header {
+            padding: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        .brand {
+            font-size: 1.9rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand span {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .status-badge {
+            font-size: 0.85rem;
+            background: rgba(0, 242, 254, 0.08);
+            color: var(--accent-cyan);
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1.2;
+        }
+
+        .hero-tag {
+            color: var(--gold-accent);
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            margin-bottom: 35px;
+        }
+
+        .hero-image-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-img {
+            width: 100%;
+            border-radius: 24px;
+            border: 1px solid var(--border-line);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.1);
+        }
+
+        /* Main CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), #00a8ff);
+            color: #000;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-snapchat {
+            background: var(--snap-yellow);
+            color: #000;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-snapchat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 252, 0, 0.3);
+        }
+
+        /* Section Styling */
+        .section-header {
+            text-align: center;
+            margin: 90px 0 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+        }
+
+        .section-header p {
+            color: var(--text-sub);
+            margin-top: 10px;
+        }
+
+        /* Services / Monetization Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-sub);
+            font-size: 0.98rem;
+            margin-bottom: 25px;
+        }
+
+        .badge-premium {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold-accent);
+            border: 1px solid var(--gold-accent);
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-line);
+            height: 300px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Contact Section */
+        .contact-box {
+            background: linear-gradient(135deg, #0d1627 0%, #060a12 100%);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            padding: 50px;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .contact-box h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-box p {
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-line);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; text-align: center; }
+            .cta-group { justify-content: center; }
+            .hero-title { font-size: 2.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand">
+                <i class="fa-solid fa-user-shield"></i>
+                M.F91 <span>/ EXECUTIVE</span>
+            </div>
+            <div class="status-badge">
+                <div class="pulse-dot"></div>
+                متاح للاستشارات والخدمات
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-tag">DIGITAL FORENSICS & CYBER INTELLIGENCE</span>
+                <h1 class="hero-title">المنصة الرسمية للأدلة الرقمية والأمن السيبراني</h1>
+                <p class="hero-desc">تقديم التحليلات الجنائية الرقمية، فحص الآثار الإلكترونية، والتوعية الأمنية المتقدمة لحماية البيانات والمؤسسات.</p>
+                
+                <div class="cta-group">
+                    <a href="#services" class="btn-primary">طلب خدمة / استشارة</a>
+                    <a href="https://www.snapchat.com/add/qtrf_91" target="_blank" class="btn-snapchat">
+                        <i class="fa-brands fa-snapchat"></i>
+                        سناب شات الرسمي
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-image-wrap">
+                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="M.F91 Executive Cybersecurity" class="hero-img">
+            </div>
+        </section>
+
+        <!-- Monetization / Services Section -->
+        <div class="section-header" id="services">
+            <h2>الخدمات والحلول المتقدمة</h2>
+            <p>حلول سيبرانية تضمن أعلى مستويات الحماية والموثوقية الرقمية</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <span class="badge-premium">خاص للجهات والأفراد</span>
+                <i class="fa-solid fa-microscope service-icon"></i>
+                <h3>فحص الأدلة الرقمية (Forensic Analysis)</h3>
+                <p>تحليل الآثار الرقمية واستخراج البيانات من الأجهزة والأنظمة وتتبع الاختراقات لتقديم تقارير دقيقة.</p>
+                <a href="#contact" style="color: var(--accent-cyan); font-weight: 700; text-decoration: none;">طلب تقييم حالة ←</a>
+            </div>
+
+            <div class="service-card">
+                <span class="badge-premium">استشارة خاصة</span>
+                <i class="fa-solid fa-user-lock service-icon"></i>
+                <h3>الاستشارات الأمنية الوقائية</h3>
+                <p>تقييم المخاطر السيبرانية للحسابات الحساسة والبنية التحتية، ووضع خطط حماية وتشفير متكاملة.</p>
+                <a href="#contact" style="color: var(--accent-cyan); font-weight: 700; text-decoration: none;">حجز جلسة استشارية ←</a>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-graduation-cap service-icon"></i>
+                <h3>ورش العمل والتوعية المخصصة</h3>
+                <p>تقديم محتوى تدريبي وتوعوي احترافي في مجالات الهندسة الاجتماعية والتحقيقات الرقمية.</p>
+                <a href="#contact" style="color: var(--accent-cyan); font-weight: 700; text-decoration: none;">التنسيق والطلب ←</a>
+            </div>
+        </div>
+
+        <!-- Gallery / Visual Showcase -->
+        <div class="section-header">
+            <h2>الهوية البصرية والأعمال</h2>
+            <p>حضور نخبوي ورؤية تقنية مواكبة لأعلى المعايير العالمية</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Cyber Security"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Digital Investigations"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=600&q=80" alt="Encryption"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Executive Tech"></div>
+        </div>
+
+        <!-- Direct Contact Section -->
+        <div class="contact-box" id="contact">
+            <h3>تواصل مباشر لطلب الخدمات</h3>
+            <p>يمكنك التواصل المباشر عبر سناب شات لتقديم الطلبات أو حجز الاستشارات الخاصة بسرعة ومباشرة.</p>
+            <a href="https://www.snapchat.com/add/qtrf_91" target="_blank" class="btn-snapchat" style="display: inline-flex; margin: 0 auto;">
+                <i class="fa-brands fa-snapchat"></i>
+                التواصل عبر سناب شات (@qtrf_91)
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 M.F91 (qtrf_91) - جميع الحقوق محفوظة.</p>
+            <p style="color: var(--accent-cyan); font-family: monospace; margin-top: 10px;">[ SYSTEM: SECURED & MONETIZATION READY ]</p>
+        </footer>
+    </div>
+
+</body>
+</html>
